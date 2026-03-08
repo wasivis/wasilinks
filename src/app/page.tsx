@@ -1,65 +1,65 @@
-import Image from "next/image";
+// src/app/page.tsx
+import { auth, signIn } from "@/auth";
+import { redirect } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Link2, Github, Globe, Sparkles } from "lucide-react";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
+  // If already logged in, skip the landing page
+  if (session) redirect("/dashboard");
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-zinc-950 text-white flex flex-col items-center justify-center relative overflow-hidden">
+      
+      {/* Background Glow Effect */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 blur-[120px] rounded-full" />
+
+      <div className="z-10 text-center px-4 max-w-2xl">
+ 
+        {/* Hero Text */}
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6 bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-transparent">
+          WasiLinks
+        </h1>
+        
+        <p className="text-zinc-400 text-lg mb-10 max-w-md mx-auto leading-relaxed">
+          Minimalist &quot;link-in-bio&quot; site. Share your projects, 
+          socials, and portfolio in one clean space.
+        </p>
+
+        {/* Sign In Button */}
+        <form
+          className="flex justify-center"
+          action={async () => {
+            "use server";
+            await signIn("google");
+          }}
+        >
+          <Button size="lg" className="cursor-pointer bg-white text-black hover:bg-zinc-200 px-8 py-6 text-lg rounded-full font-semibold transition-all hover:scale-105 active:scale-95 flex items-center gap-3">
+            <Globe className="w-5 h-5" />
+            Get Started with Google
+          </Button>
+        </form>
+
+        {/* Social Proof / Features */}
+        <div className="mt-16 flex flex-wrap justify-center gap-8 text-zinc-500">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4" />
+            <span className="text-sm">Custom @usernames</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Github className="w-4 h-4" />
+            <span className="text-sm">Open Source</span>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
+
+      {/* Footer Decoration */}
+      <div className="absolute bottom-8 text-zinc-600 text-xs font-mono tracking-widest uppercase">
+        Built by wasivis - {new Date().getFullYear()} WasiLinks
+      </div>
     </div>
   );
 }
