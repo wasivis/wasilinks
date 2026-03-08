@@ -29,7 +29,7 @@ export default async function DashboardPage() {
 
   // 4. Generate the profile URL (Username preferred, ID as fallback)
   const displayId = currentUser?.username || session.user.id;
-  const profileUrl = `http://localhost:3000/${displayId}`;
+  const profileUrl = `https://wasilinks.vercel.app/${displayId}`;
 
 return (
   <div className="min-h-screen bg-zinc-950 text-white p-8 relative overflow-hidden">
@@ -58,7 +58,7 @@ return (
         </div>
         
         <form action={async () => { "use server"; await signOut({ redirectTo: "/" }); }}>
-          <Button variant="outline" className="cursor-pointer text-zinc-400 border-zinc-800 hover:bg-zinc-900">
+          <Button variant="outline" className="cursor-pointer text-zinc-400 border-zinc-800 hover:bg-zinc-800">
             Logout
           </Button>
         </form>
